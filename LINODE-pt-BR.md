@@ -69,16 +69,16 @@ Se usou stack, inicie a máquina, clicando em **Boot** no painel de controle.
 >`sudo ./install.sh senha-do-mysql`
 
 
-8. Rode o gerador de chaves publica/privada
+8. Rode o gerador de chaves pública/privada
 -------------------------------------------
 >`ssh-keygen`  
 Digite Enter para aceitar o arquivo padrão. Digite uma senha, confirmando em seguida.  
 Pegue a chave publica:  
 >`cat ~/.ssh/id_rsa.pub`  
-e adicione no [github](https://github.com/account#ssh_bucket)  
+e adicione no [GitHub](https://github.com/account#ssh_bucket)  
 
 
-9. Baixe as fontes do GitHub
+9. Baixe o projeto do GitHub
 ----------------------------
 Não esqueça de fazer:  
 >`sudo mkdir /var/www`  
@@ -97,10 +97,15 @@ Defina a variável de ambiente:
 Rode:  
 >`cd /var/www/nome-projeto`  
 >`rake db:create`  
->`rake db:migrate`
+>`rake db:migrate`  
 
 
-11. Configure o Nginx
+11. Ajustando a hora do servidor
+--------------------------------
+> `sudo ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime`
+
+
+12. Configure o Nginx
 ---------------------
 
 >`sudo nano /usr/local/nginx/conf/nginx.conf`  
@@ -130,3 +135,4 @@ Referências
 * http://www.mensk.com/webmaster-toolbox/perfect-ubuntu-hardy-nginx-mysql5-php5-wordpress/
 * http://wiki.nginx.org/NginxHttpCoreModule
 * http://nginx.org/en/docs/http/request_processing.html
+* http://github.com/jnstq/rails-nginx-passenger-ubuntu
