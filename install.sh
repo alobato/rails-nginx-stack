@@ -79,18 +79,17 @@ else
 
 	# http://nagios.intuitinnovations.com/downloads/asterisk/asterisk1.4.2-A-install
 	# http://forum.slicehost.com/comments.php?DiscussionID=2187
-	
 	# install MySQL non-interactively
-	export DEBIAN_FRONTEND=noninteractive
-	sudo aptitude -q -y install mysql-server
-	unset DEBIAN_FRONTEND
+	# export DEBIAN_FRONTEND=noninteractive
+	# sudo aptitude -q -y install mysql-server
+	# unset DEBIAN_FRONTEND
+	# mysqladmin -u root password $mysqlpwd
 	
-	sudo aptitude install mysql-client libmysqlclient-dev -y
-	
-	mysqladmin -u root password $mysqlpwd
+	sudo aptitude install mysql-server mysql-client libmysqlclient-dev -y
 
 	sudo gem install mysql --no-ri --no-rdoc
-	
+
+
 	echo "VPS Setup Complete"
 	echo "------------------------------------------------------------------"
 

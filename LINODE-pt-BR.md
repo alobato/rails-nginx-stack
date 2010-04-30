@@ -58,6 +58,7 @@ Dê **control+x** - **Y** - **Enter**
 
 6. Acesse o servidor com o usuário criado
 ------------------------------------------
+Se usou stack, inicie a máquina, clicando em **Boot** no painel de controle.
 >`ssh username@numero.ip`
 
 
@@ -65,7 +66,55 @@ Dê **control+x** - **Y** - **Enter**
 -------------------
 >`wget http://github.com/alobato/rails-nginx-stack/raw/master/install.sh`  
 >`chmod +x install.sh`  
->`./install.sh senha-do-mysql`
+>`sudo ./install.sh senha-do-mysql`
+
+
+8. Rode o gerador de chaves publica/privada
+-------------------------------------------
+>`ssh-keygen`  
+Digite Enter para aceitar o arquivo padrão. Digite uma senha, confirmando em seguida.  
+Pegue a chave publica:  
+>`cat ~/.ssh/id_rsa.pub`  
+e adicione no [github](https://github.com/account#ssh_bucket)  
+
+
+9. Baixe as fontes do GitHub
+----------------------------
+Não esqueça de fazer:  
+>`sudo mkdir /var/www`  
+>`sudo chown -R username /var/www`
+
+Crie um clone do repositório Git:  
+>`cd /var/www`  
+>`git clone git@github.com:username/nome-projeto.git`  
+
+
+10. Configure a aplicação Rails
+--------------------------------
+Defina a variável de ambiente:  
+>`export RAILS_ENV=production`
+
+Rode:  
+>`cd /var/www/nome-projeto`  
+>`rake db:create`  
+>`rake db:migrate`
+
+
+11. Configure o Nginx
+---------------------
+
+>`sudo nano /usr/local/nginx/conf/nginx.conf`  
+
+>     server {
+>         listen 80;
+>         server_name www.mycook.com;
+>         root /var/www/nome_do_projeto/public;
+>         passenger_enabled on;
+>     }
+
+
+>`sudo /etc/init.d/nginx restart`
+
 
 
 Referências
@@ -78,3 +127,6 @@ Referências
 * http://articles.slicehost.com/2010/4/30/ubuntu-lucid-setup-part-1
 * http://articles.slicehost.com/2010/4/30/ubuntu-lucid-setup-part-2
 * http://www.slideshare.net/mrprompt/alta-perfomance-de-aplicaes-php-com-nginx
+* http://www.mensk.com/webmaster-toolbox/perfect-ubuntu-hardy-nginx-mysql5-php5-wordpress/
+* http://wiki.nginx.org/NginxHttpCoreModule
+* http://nginx.org/en/docs/http/request_processing.html
