@@ -82,7 +82,7 @@ else
 	
 	# install MySQL non-interactively
 	export DEBIAN_FRONTEND=noninteractive
-	aptitude -q -y install mysql-server
+	sudo aptitude -q -y install mysql-server
 	unset DEBIAN_FRONTEND
 	
 	sudo aptitude install mysql-client libmysqlclient-dev -y
