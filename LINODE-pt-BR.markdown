@@ -63,8 +63,8 @@ Dê **control+x** - **Y** - **Enter**
 
 7. Execute os comandos para rodar o scritpt:
 -------------------
->`wget http://github.com/alobato/rails-nginx-stack/raw/master/install.sh`
->`chmod +x install.sh`
+>`wget http://github.com/alobato/rails-nginx-stack/raw/master/install.sh`  
+>`chmod +x install.sh`  
 >`./install.sh senha-do-mysql`
 
 
