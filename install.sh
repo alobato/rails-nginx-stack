@@ -92,12 +92,18 @@ echo "Configure iptables"
 echo "------------------------------------------------------------------"
 
 # http://stackoverflow.com/questions/850730/how-can-i-append-text-to-etc-apt-sources-list-from-the-command-line
-sudo cat | sudo tee -a /etc/init.d/firewall <<ENDOFFILE
+cat | sudo tee /etc/init.d/firewall <<ENDOFFILE
 #!/bin/bash
 
-start(){
+# https://help.ubuntu.com/community/IptablesHowTo
+# http://www.slideshare.net/marcelobarrosalmeida/tutorial-sobre-iptables
 
+start(){
+# Accepting all connections made on the special lo - loopback - 127.0.0.1 - interface
 iptables -A INPUT -p tcp -i lo -j ACCEPT
+
+# Rule which allows established tcp connections to stay up
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 
 # SSH:
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT
@@ -111,10 +117,8 @@ iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 iptables -A INPUT -p tcp --dport 7080 -j ACCEPT
 iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 
+# Block others ports
 iptables -A INPUT -p tcp --syn -j DROP
-
-iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-
 iptables -A INPUT -p udp --dport 0:1023 -j DROP
 
 }
@@ -127,10 +131,9 @@ iptables -P OUTPUT ACCEPT
 case "\$1" in
 "start") start ;;
 "stop") stop ;;
-"restart") parar; iniciar ;;
+"restart") stop; start ;;
 *) echo "start or stop params"
 esac
-
 ENDOFFILE
 
 sudo chmod +x /etc/init.d/firewall
