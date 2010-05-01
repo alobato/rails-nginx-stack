@@ -63,6 +63,8 @@ sudo chmod +x /etc/init.d/nginx
 sudo /usr/sbin/update-rc.d -f nginx defaults
 sudo /etc/init.d/nginx start
 
+export RAILS_ENV=production
+
 
 echo "Install Git"
 echo "------------------------------------------------------------------"

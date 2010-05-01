@@ -91,21 +91,13 @@ Crie um clone do repositório Git:
 
 10. Configure a aplicação Rails
 --------------------------------
-Defina a variável de ambiente:  
->`export RAILS_ENV=production`
-
 Rode:  
 >`cd /var/www/nome-projeto`  
 >`rake db:create`  
 >`rake db:migrate`  
 
 
-11. Ajustando a hora do servidor
---------------------------------
-> `sudo ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime`
-
-
-12. Configure o Nginx
+11. Configure o Nginx
 ---------------------
 
 >`sudo nano /usr/local/nginx/conf/nginx.conf`  
