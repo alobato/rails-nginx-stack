@@ -7,7 +7,7 @@ echo ""
 echo "Set Timezone"
 echo "------------------------------------------------------------------"
 
-sudo ln -sf /usr/share/zoneinfo/America/Sao_Paulo localtime
+sudo ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 
 
 echo "Install Essencials"
@@ -63,7 +63,7 @@ sudo chmod +x /etc/init.d/nginx
 sudo /usr/sbin/update-rc.d -f nginx defaults
 sudo /etc/init.d/nginx start
 
-export RAILS_ENV=production
+echo "RAILS_ENV=production" | sudo tee -a /etc/environment
 
 
 echo "Install Git"
@@ -130,6 +130,7 @@ case "\$1" in
 "restart") parar; iniciar ;;
 *) echo "start or stop params"
 esac
+
 ENDOFFILE
 
 sudo chmod +x /etc/init.d/firewall

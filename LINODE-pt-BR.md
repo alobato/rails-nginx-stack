@@ -66,7 +66,7 @@ Se usou stack, inicie a máquina, clicando em **Boot** no painel de controle.
 -------------------
 >`wget http://github.com/alobato/rails-nginx-stack/raw/master/install.sh`  
 >`chmod +x install.sh`  
->`sudo ./install.sh senha-do-mysql`
+>`sudo ./install.sh`
 
 
 8. Rode o gerador de chaves pública/privada
