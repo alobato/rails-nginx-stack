@@ -4,6 +4,11 @@ echo "Automated VPS Setup for Ubuntu 10.04 LTS (Lucid) - Rails with Nginx"
 echo "------------------------------------------------------------------"
 echo ""
 
+echo "Set Timezone"
+echo "------------------------------------------------------------------"
+
+sudo ln -sf /usr/share/zoneinfo/America/Sao_Paulo localtime
+
 
 echo "Install Essencials"
 echo "------------------------------------------------------------------"
@@ -84,22 +89,13 @@ sudo gem install mysql --no-ri --no-rdoc
 echo "Configure iptables"
 echo "------------------------------------------------------------------"
 
-# Para remover:
-# sudo update-rc.d -f firewall remove
-
 # http://stackoverflow.com/questions/850730/how-can-i-append-text-to-etc-apt-sources-list-from-the-command-line
 sudo cat | sudo tee -a /etc/init.d/firewall <<ENDOFFILE
 #!/bin/bash
 
-iniciar(){
+start(){
 
-# Abre para a interface de loopback:
 iptables -A INPUT -p tcp -i lo -j ACCEPT
-
-# Bloqueia um determinado IP. Use para bloquear hosts especificos
-#iptables -A INPUT -p ALL -s 88.191.79.206 -j DROP
-
-# Abre as portas referentes aos servicos usados
 
 # SSH:
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT
@@ -111,58 +107,26 @@ iptables -A INPUT -p udp --dport 53 -j ACCEPT
 # HTTP e HTTPS:
 iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 iptables -A INPUT -p tcp --dport 7080 -j ACCEPT
-#iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 
-# Bloqueia conexoes nas demais portas
 iptables -A INPUT -p tcp --syn -j DROP
 
-# Garante que o firewall permitira pacotes de conexoes ja iniciadas
 iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 
-# Bloqueia as portas UDP de 0 a 1023 com excecao das abertas acima
 iptables -A INPUT -p udp --dport 0:1023 -j DROP
 
-# Para testar descomente. Ficara funcionando por 5 minutos
-# sleep 300
-# iptables -F
-# iptables -P INPUT ACCEPT
-# iptables -P OUTPUT ACCEPT
-# iptables -X
-
-
-# Drop all traffic to 127/8 that doesn't use lo0
-#iptables -A INPUT -i ! lo -d 127.0.0.0/8 -j REJECT
-
-# Allows all outbound traffic
-# You can modify this to only allow certain traffic
-#iptables -A OUTPUT -j ACCEPT
-
-# Allow ping
-#iptables -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
-
-# Allows SSH connections
-# THE -dport NUMBER IS THE SAME ONE YOU SET UP IN THE SSHD_CONFIG FILE
-#iptables -A INPUT -p tcp -m state --state NEW --dport 30000 -j ACCEPT
-
-# Reject all other inbound - default deny unless explicitly allowed policy
-#iptables -A INPUT -j REJECT
-#iptables -A FORWARD -j REJECT
-
-# log iptables denied calls
-#iptables -A INPUT -m limit --limit 5/min -j LOG --log-prefix "iptables denied: " --log-level 7
-
 }
-parar(){
+stop(){
 iptables -F
 iptables -P INPUT ACCEPT
 iptables -P OUTPUT ACCEPT
 }
 
 case "\$1" in
-"start") iniciar ;;
-"stop") parar ;;
+"start") start ;;
+"stop") stop ;;
 "restart") parar; iniciar ;;
-*) echo "Use os parametros start ou stop"
+*) echo "start or stop params"
 esac
 ENDOFFILE
 
@@ -170,10 +134,43 @@ sudo chmod +x /etc/init.d/firewall
 sudo update-rc.d firewall defaults 99
 sudo /etc/init.d/firewall start
 
+# To remove:
+# sudo update-rc.d -f firewall remove
 
+
+echo "Install apache, php and phpmyadmin"
+echo "------------------------------------------------------------------"
+
+sudo aptitude -y install apache2
+sudo aptitude -y install php5 php5-mysql
+
+sed -e 's/<VirtualHost \*:80>/<VirtualHost *:7080>/' /etc/apache2/sites-available/default | sudo tee /etc/apache2/sites-available/new_default
+sudo mv /etc/apache2/sites-available/new_default /etc/apache2/sites-available/default
+
+sed -e 's/NameVirtualHost \*:80/NameVirtualHost *:7080/' -e 's/Listen 80/Listen 7080/' /etc/apache2/ports.conf | sudo tee /etc/apache2/new_ports_conf
+sudo mv /etc/apache2/new_ports_conf /etc/apache2/ports.conf
+
+sudo aptitude -y install phpmyadmin
+ln -s /usr/share/phpmyadmin/ /var/www/phpmyadmin
+
+
+# echo "Install postfix"
+# echo "------------------------------------------------------------------"
+# http://articles.slicehost.com/2010/3/1/barebones-postfix-install-for-ubuntu
+
+# sudo aptitude install postfix
+# Install type: Internet Site
+# Default email domain name: example.com
+
+# sudo /etc/init.d/postfix start
+# sudo /usr/sbin/update-rc.d postfix defaults
+
+echo "Clear bash histories as the password got exposed"
+echo "------------------------------------------------------------------"
+
+history -c
+tput bel
 
 
 echo "VPS Setup Complete"
 echo "------------------------------------------------------------------"
-
-
