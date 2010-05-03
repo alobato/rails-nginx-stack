@@ -80,31 +80,31 @@ e adicione no [GitHub](https://github.com/account#ssh_bucket)
 
 9. Baixe o projeto do GitHub
 ----------------------------
-Não esqueça de fazer:  
->`sudo mkdir /var/www`  
+Não esqueça de fazer:   
 >`sudo chown -R username /var/www`
 
-Crie um clone do repositório Git:  
+Faça o clone do repositório Git:  
 >`cd /var/www`  
->`git clone git@github.com:username/nome-projeto.git`  
+>`git clone git@github.com:username/nome_do_projeto.git`
+
+Você pode pular os itens 9 e 10 se utilizar o plugin [Imploy](http://github.com/dcrec1/inploy):   
 
 
 10. Configure a aplicação Rails
 --------------------------------
 Rode:  
->`cd /var/www/nome-projeto`  
+>`cd /var/www/nome_do_projeto`  
 >`rake db:create`  
 >`rake db:migrate`  
 
 
 11. Configure o Nginx
 ---------------------
-
 >`sudo nano /usr/local/nginx/conf/nginx.conf`  
 
 >     server {
 >         listen 80;
->         server_name www.mycook.com;
+>         server_name www.dominio.com;
 >         root /var/www/nome_do_projeto/public;
 >         passenger_enabled on;
 >     }
@@ -112,6 +112,15 @@ Rode:
 
 >`sudo /etc/init.d/nginx restart`
 
+
+12. Instale o Munin
+-------------------
+* http://library.linode.com/server-monitoring/munin/ubuntu-8.04-hardy
+* http://library.linode.com/web-servers/apache/access-control/httpd-authentication
+* http://blog.edseek.com/archives/2006/07/13/munin-alert-email-notification/
+* http://articles.slicehost.com/2010/4/9/enabling-munin-node-plug-ins-on-ubuntu
+* http://jetpackweb.com/blog/2009/09/29/munin-graphs-for-phusion-passenger-a-k-a-mod_rails/
+* http://www.alfajango.com/blog/how-to-monitor-your-railspassenger-app-with-munin#configure-munin-for-passenger-stats
 
 
 Referências

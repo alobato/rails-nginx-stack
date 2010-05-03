@@ -13,20 +13,17 @@ sudo ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 echo "Install Essencials"
 echo "------------------------------------------------------------------"
 
-sudo aptitude install build-essential -y
-sudo aptitude install zlib1g-dev libreadline5-dev libssl-dev -y
+sudo aptitude install build-essential zlib1g-dev libreadline5-dev libssl-dev -y
 
 
 echo "Install REE"
 echo "------------------------------------------------------------------"
 
-mkdir sources
-cd sources
+mkdir ~/tmp && cd ~/tmp
 wget http://rubyforge.org/frs/download.php/68719/ruby-enterprise-1.8.7-2010.01.tar.gz
 tar xzvf ruby-enterprise-1.8.7-2010.01.tar.gz
 sudo ./ruby-enterprise-1.8.7-2010.01/installer --auto=/usr/local/ruby-enterprise
-cd ..
-rm -rf sources
+rm -rf ~/tmp
 
 sudo ln -s /usr/local/ruby-enterprise/bin/erb /usr/local/bin/erb
 sudo ln -s /usr/local/ruby-enterprise/bin/gem /usr/local/bin/gem
@@ -56,6 +53,7 @@ sudo ln -s /usr/local/ruby-enterprise/bin/passenger-stress-test /usr/local/bin/p
 
 sudo passenger-install-nginx-module --auto --auto-download --prefix=/usr/local/nginx
 
+cd ~
 wget http://github.com/benschwarz/passenger-stack/raw/master/config/stack/nginx/init.d
 sudo cp init.d /etc/init.d/nginx
 rm init.d
@@ -77,14 +75,8 @@ echo "------------------------------------------------------------------"
 
 # http://nagios.intuitinnovations.com/downloads/asterisk/asterisk1.4.2-A-install
 # http://forum.slicehost.com/comments.php?DiscussionID=2187
-# install MySQL non-interactively
-# export DEBIAN_FRONTEND=noninteractive
-# sudo aptitude -q -y install mysql-server
-# unset DEBIAN_FRONTEND
-# mysqladmin -u root password $mysqlpwd
 
 sudo aptitude install mysql-server mysql-client libmysqlclient-dev -y
-
 sudo gem install mysql --no-ri --no-rdoc
 
 
@@ -140,42 +132,36 @@ sudo chmod +x /etc/init.d/firewall
 sudo update-rc.d firewall defaults 99
 sudo /etc/init.d/firewall start
 
-# To remove:
-# sudo update-rc.d -f firewall remove
-
 
 echo "Install apache, php and phpmyadmin"
 echo "------------------------------------------------------------------"
 
-sudo aptitude -y install apache2
-sudo aptitude -y install php5 php5-mysql
+sudo aptitude install phpmyadmin -y
+sudo ln -s /usr/share/phpmyadmin/ /var/www/phpmyadmin
 
 sed -e 's/<VirtualHost \*:80>/<VirtualHost *:7080>/' /etc/apache2/sites-available/default | sudo tee /etc/apache2/sites-available/new_default
 sudo mv /etc/apache2/sites-available/new_default /etc/apache2/sites-available/default
-
 sed -e 's/NameVirtualHost \*:80/NameVirtualHost *:7080/' -e 's/Listen 80/Listen 7080/' /etc/apache2/ports.conf | sudo tee /etc/apache2/new_ports_conf
 sudo mv /etc/apache2/new_ports_conf /etc/apache2/ports.conf
 
-sudo aptitude -y install phpmyadmin
-ln -s /usr/share/phpmyadmin/ /var/www/phpmyadmin
+sudo /etc/init.d/apache2 restart
 
 
-# echo "Install postfix"
-# echo "------------------------------------------------------------------"
+echo "Install postfix"
+echo "------------------------------------------------------------------"
 # http://articles.slicehost.com/2010/3/1/barebones-postfix-install-for-ubuntu
 
-# sudo aptitude install postfix
 # Install type: Internet Site
 # Default email domain name: example.com
+sudo aptitude install postfix
+sudo /usr/sbin/update-rc.d postfix defaults
+sudo /etc/init.d/postfix start
 
-# sudo /etc/init.d/postfix start
-# sudo /usr/sbin/update-rc.d postfix defaults
 
 echo "Clear bash histories as the password got exposed"
 echo "------------------------------------------------------------------"
 
 history -c
-tput bel
 
 
 echo "VPS Setup Complete"
