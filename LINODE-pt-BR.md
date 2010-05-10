@@ -20,7 +20,8 @@ Ainda no painel de controle do Linode, clique no menu Network.
 Veja o ip do servidor (eth0) na caxa Network Settings.
 
 No terminal acesse:
->`ssh root@numero.ip`
+
+	ssh root@numero.ip
 
 O sistema vai perguntar se você aceita o RSA key. Digite **yes**.  
 Digite a senha do root que você definiu quando criou a distribuição linux.
@@ -30,22 +31,24 @@ Digite a senha do root que você definiu quando criou a distribuição linux.
 ----------------------------------
 Atualize o banco de dados de pacotes (etc/apt/sources.list) e a distribuição:
 
->`aptitude update`  
->`aptitude -y full-upgrade`
+	aptitude update
+	aptitude -y full-upgrade
 
 
 4. Crie um usuáro
 ------------------
-Crie o usuário:  
->`adduser username`
+Crie o usuário:
+
+	adduser username
 
 O sistema vai pedir uma senha e para as demais informações aperte **Enter**.
 No final digite **Y** para confirmar.
 
-Edite /etc/sudores:  
->`nano /etc/sudoers`
+Edite /etc/sudores:
 
-E adicione no final do arquivo a linha abaixo:
+	nano /etc/sudoers
+
+E adicione no final do arquivo a linha abaixo:  
 >username ALL=(ALL) ALL
 
 Dê **control+x** - **Y** - **Enter**
@@ -53,62 +56,81 @@ Dê **control+x** - **Y** - **Enter**
 
 5. Reinicie o servidor
 ----------------------
->`sudo shutdown -r now`
+	sudo shutdown -r now
 
 
 6. Acesse o servidor com o usuário criado
 ------------------------------------------
 Se usou stack, inicie a máquina, clicando em **Boot** no painel de controle.
->`ssh username@numero.ip`
+
+	ssh username@numero.ip
 
 
 7. Execute os comandos para rodar o scritpt:
--------------------
->`wget http://github.com/alobato/rails-nginx-stack/raw/master/install.sh`  
->`chmod +x install.sh`  
->`sudo ./install.sh`
+--------------------------------------------
+	wget http://github.com/alobato/rails-nginx-stack/raw/master/install.sh
+	chmod +x install.sh
+	sudo ./install.sh
 
 
 8. Rode o gerador de chaves pública/privada
 -------------------------------------------
->`ssh-keygen`  
+	ssh-keygen
+
 Digite Enter para aceitar o arquivo padrão. Digite uma senha, confirmando em seguida.  
-Pegue a chave publica:  
->`cat ~/.ssh/id_rsa.pub`  
+Pegue a chave publica:
+
+	cat ~/.ssh/id_rsa.pub
+
 e adicione no [GitHub](https://github.com/account#ssh_bucket)  
+
+
+9. Configure o database.yml
+---------------------------
+Edite o arquivo, fornecendo informações do banco de dados de produção. Exemplo:
+
+	production:
+	    adapter: mysql
+	    encoding: utf8
+	    database: nome_do_projeto_production
+	    username: root
+	    password: senha
+	    host: 127.0.0.1
 
 
 9. Baixe o projeto do GitHub
 ----------------------------
 Não esqueça de fazer:   
->`sudo chown -R username /var/www`
 
-Faça o clone do repositório Git:  
->`cd /var/www`  
->`git clone git@github.com:username/nome_do_projeto.git`
+	sudo chown -R username /var/www
 
-Você pode pular os itens 9 e 10 se utilizar o plugin [Imploy](http://github.com/dcrec1/inploy):   
+Faça o clone do repositório Git:
+
+	cd /var/www
+	git clone git@github.com:username/nome_do_projeto.git
+
+Você pode pular os itens 9 e 10 se utilizar o plugin [Inploy](http://github.com/dcrec1/inploy):   
 
 
 10. Configure a aplicação Rails
 --------------------------------
-Rode:  
->`cd /var/www/nome_do_projeto`  
->`rake db:create`  
->`rake db:migrate`  
+Rode:
+
+	cd /var/www/nome_do_projeto
+	rake db:create
+	rake db:migrate
 
 
 11. Configure o Nginx
 ---------------------
->`sudo nano /usr/local/nginx/conf/nginx.conf`  
+>`sudo nano /usr/local/nginx/conf/nginx.conf`
 
->     server {
->         listen 80;
->         server_name www.dominio.com;
->         root /var/www/nome_do_projeto/public;
->         passenger_enabled on;
->     }
-
+    server {
+        listen 80;
+        server_name www.dominio.com;
+        root /var/www/nome_do_projeto/public;
+        passenger_enabled on;
+    }
 
 >`sudo /etc/init.d/nginx restart`
 

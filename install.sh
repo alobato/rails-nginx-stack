@@ -84,7 +84,7 @@ echo "Configure iptables"
 echo "------------------------------------------------------------------"
 
 # http://stackoverflow.com/questions/850730/how-can-i-append-text-to-etc-apt-sources-list-from-the-command-line
-cat | sudo tee /etc/init.d/firewall <<ENDOFFILE
+sudo tee /etc/init.d/firewall <<ENDOFFILE
 #!/bin/bash
 
 # https://help.ubuntu.com/community/IptablesHowTo
