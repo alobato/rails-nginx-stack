@@ -16,6 +16,6 @@ echo "${ADMIN_USERNAME}:${ADMIN_PASSWORD}" | chpasswd
 
 cp /etc/sudoers /etc/sudoers.tmp
 chmod 0640 /etc/sudoers.tmp
-echo "$ADMIN_USERNAME ALL=(ALL) ALL" >> /etc/sudoers.tmp
+echo "$ADMIN_USERNAME ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.tmp
 chmod 0440 /etc/sudoers.tmp
 mv /etc/sudoers.tmp /etc/sudoers

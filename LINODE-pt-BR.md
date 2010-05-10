@@ -77,7 +77,7 @@ Se usou stack, inicie a máquina, clicando em **Boot** no painel de controle.
 -------------------------------------------
 	ssh-keygen
 
-Digite Enter para aceitar o arquivo padrão. Digite uma senha, confirmando em seguida.  
+Digite Enter para aceitar o arquivo padrão. Deixe a senha em branco, confirmando em seguida.  
 Pegue a chave publica:
 
 	cat ~/.ssh/id_rsa.pub
