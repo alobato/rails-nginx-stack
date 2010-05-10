@@ -27,7 +27,8 @@ echo "------------------------------------------------------------------"
 echo "------------------------------------------------------------------"
 echo "------------------------------------------------------------------"
 
-sudo echo "luigi" > /etc/hostname
+echo "luigi" | sudo tee /etc/hostname
+echo "127.0.0.1 luigi" | sudo tee -a /etc/hosts
 sudo hostname -F /etc/hostname
 
 
@@ -80,6 +81,7 @@ mkdir ~/tmp && cd ~/tmp
 wget http://rubyforge.org/frs/download.php/68719/ruby-enterprise-1.8.7-2010.01.tar.gz
 tar xzvf ruby-enterprise-1.8.7-2010.01.tar.gz
 sudo ./ruby-enterprise-1.8.7-2010.01/installer --auto=/usr/local/ruby-enterprise
+cd ~
 rm -rf ~/tmp
 
 sudo ln -s /usr/local/ruby-enterprise/bin/erb /usr/local/bin/erb
