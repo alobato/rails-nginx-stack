@@ -78,9 +78,9 @@ echo "------------------------------------------------------------------"
 echo "------------------------------------------------------------------"
 
 mkdir ~/tmp && cd ~/tmp
-wget http://rubyforge.org/frs/download.php/68719/ruby-enterprise-1.8.7-2010.01.tar.gz
-tar xzvf ruby-enterprise-1.8.7-2010.01.tar.gz
-sudo ./ruby-enterprise-1.8.7-2010.01/installer --auto=/usr/local/ruby-enterprise
+wget http://rubyforge.org/frs/download.php/71096/ruby-enterprise-1.8.7-2010.02.tar.gz
+tar xzvf ruby-enterprise-1.8.7-2010.02.tar.gz
+sudo ./ruby-enterprise-1.8.7-2010.02/installer --auto=/usr/local/ruby-enterprise
 cd ~
 rm -rf ~/tmp
 
@@ -108,8 +108,6 @@ echo "------------------------------------------------------------------"
 echo "------------------------------------------------------------------"
 echo "------------------------------------------------------------------"
 echo "------------------------------------------------------------------"
-
-sudo gem install passenger
 
 sudo ln -s /usr/local/ruby-enterprise/bin/passenger-config /usr/local/bin/passenger-config
 sudo ln -s /usr/local/ruby-enterprise/bin/passenger-install-nginx-module /usr/local/bin/passenger-install-nginx-module
