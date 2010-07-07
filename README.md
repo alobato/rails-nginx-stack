@@ -6,7 +6,7 @@ A bash script to automate setup Ruby on Rails with Nginx server on VPS (Linode, 
 The script *install.sh*:
 
 * Timezone to São Paulo/Brazil (change to your timezone)
-* Ruby Enterprise Edition 1.8.7-2010.01
+* Ruby Enterprise Edition 1.8.7-2010.02
 * Passenger with Nginx
 * Git
 * MySQL
