@@ -61,7 +61,8 @@ echo "------------------------------------------------------------------"
 echo "------------------------------------------------------------------"
 echo "------------------------------------------------------------------"
 
-sudo aptitude install build-essential zlib1g-dev libreadline5-dev libssl-dev -y
+sudo apt-get install aptitude
+sudo aptitude install build-essential zlib1g-dev libreadline5-dev libssl-dev wget -y
 
 
 echo "Install REE"
@@ -179,6 +180,8 @@ echo "------------------------------------------------------------------"
 echo "------------------------------------------------------------------"
 echo "------------------------------------------------------------------"
 echo "------------------------------------------------------------------"
+
+sudo aptitude install iptables
 
 # http://stackoverflow.com/questions/850730/how-can-i-append-text-to-etc-apt-sources-list-from-the-command-line
 sudo tee /etc/init.d/firewall <<ENDOFFILE
