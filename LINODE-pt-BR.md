@@ -31,6 +31,7 @@ Digite a senha do root que você definiu quando criou a distribuição linux.
 ----------------------------------
 Atualize o banco de dados de pacotes (etc/apt/sources.list) e a distribuição:
 
+	apt-get install aptitude
 	aptitude update
 	aptitude -y full-upgrade
 
@@ -56,7 +57,7 @@ Dê **control+x** - **Y** - **Enter**
 
 5. Reinicie o servidor
 ----------------------
-	sudo shutdown -r now
+	shutdown -r now
 
 
 6. Acesse o servidor com o usuário criado

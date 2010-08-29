@@ -61,7 +61,6 @@ echo "------------------------------------------------------------------"
 echo "------------------------------------------------------------------"
 echo "------------------------------------------------------------------"
 
-sudo apt-get install aptitude
 sudo aptitude install build-essential zlib1g-dev libreadline5-dev libssl-dev wget -y
 
 
