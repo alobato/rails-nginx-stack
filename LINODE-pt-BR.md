@@ -69,6 +69,7 @@ Se usou stack, inicie a máquina, clicando em **Boot** no painel de controle.
 
 7. Execute os comandos para rodar o scritpt:
 --------------------------------------------
+	sudo aptitude install wget -y
 	wget http://github.com/alobato/rails-nginx-stack/raw/master/install.sh
 	chmod +x install.sh
 	sudo ./install.sh
