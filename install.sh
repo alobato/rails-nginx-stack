@@ -64,6 +64,7 @@ echo "------------------------------------------------------------------"
 sudo aptitude install build-essential zlib1g-dev libreadline5-dev libssl-dev wget -y
 sudo aptitude install libxslt-dev libxml2-dev -y # nokogiri
 
+
 echo "Install REE"
 echo "------------------------------------------------------------------"
 echo "------------------------------------------------------------------"
@@ -84,17 +85,8 @@ sudo ./ruby-enterprise-1.8.7-2010.02/installer --auto=/usr/local/ruby-enterprise
 cd ~
 rm -rf ~/tmp
 
-sudo ln -s /usr/local/ruby-enterprise/bin/erb /usr/local/bin/erb
-sudo ln -s /usr/local/ruby-enterprise/bin/gem /usr/local/bin/gem
-sudo ln -s /usr/local/ruby-enterprise/bin/rackup /usr/local/bin/rackup
-sudo ln -s /usr/local/ruby-enterprise/bin/rails /usr/local/bin/rails
-sudo ln -s /usr/local/ruby-enterprise/bin/rake /usr/local/bin/rake
-sudo ln -s /usr/local/ruby-enterprise/bin/rdoc /usr/local/bin/rdoc
-sudo ln -s /usr/local/ruby-enterprise/bin/ree-version /usr/local/bin/ree-version
-sudo ln -s /usr/local/ruby-enterprise/bin/ri /usr/local/bin/ri
-sudo ln -s /usr/local/ruby-enterprise/bin/ruby /usr/local/bin/ruby
-sudo ln -s /usr/local/ruby-enterprise/bin/testrb /usr/local/bin/testrb
-sudo ln -s /usr/local/ruby-enterprise/bin/irb /usr/local/bin/irb
+echo "PATH=\$PATH:/usr/local/ruby-enterprise/bin" >> ~/.profile
+. ~/.profile
 
 
 echo "Install Passenger and Nginx"
@@ -109,15 +101,6 @@ echo "------------------------------------------------------------------"
 echo "------------------------------------------------------------------"
 echo "------------------------------------------------------------------"
 echo "------------------------------------------------------------------"
-
-sudo ln -s /usr/local/ruby-enterprise/bin/passenger-config /usr/local/bin/passenger-config
-sudo ln -s /usr/local/ruby-enterprise/bin/passenger-install-nginx-module /usr/local/bin/passenger-install-nginx-module
-sudo ln -s /usr/local/ruby-enterprise/bin/passenger-install-apache2-module /usr/local/bin/passenger-install-apache2-module
-sudo ln -s /usr/local/ruby-enterprise/bin/passenger-make-enterprisey /usr/local/bin/passenger-make-enterprisey
-sudo ln -s /usr/local/ruby-enterprise/bin/passenger-memory-stats /usr/local/bin/passenger-memory-stats
-sudo ln -s /usr/local/ruby-enterprise/bin/passenger-spawn-server /usr/local/bin/passenger-spawn-server
-sudo ln -s /usr/local/ruby-enterprise/bin/passenger-status /usr/local/bin/passenger-status
-sudo ln -s /usr/local/ruby-enterprise/bin/passenger-stress-test /usr/local/bin/passenger-stress-test
 
 sudo passenger-install-nginx-module --auto --auto-download --prefix=/usr/local/nginx
 
