@@ -62,7 +62,7 @@ echo "------------------------------------------------------------------"
 echo "------------------------------------------------------------------"
 
 sudo aptitude install build-essential zlib1g-dev libreadline5-dev libssl-dev wget -y
-
+sudo aptitude install libxslt-dev libxml2-dev -y # nokogiri
 
 echo "Install REE"
 echo "------------------------------------------------------------------"
@@ -94,6 +94,11 @@ sudo ln -s /usr/local/ruby-enterprise/bin/ree-version /usr/local/bin/ree-version
 sudo ln -s /usr/local/ruby-enterprise/bin/ri /usr/local/bin/ri
 sudo ln -s /usr/local/ruby-enterprise/bin/ruby /usr/local/bin/ruby
 sudo ln -s /usr/local/ruby-enterprise/bin/testrb /usr/local/bin/testrb
+sudo ln -s /usr/local/ruby-enterprise/bin/irb /usr/local/bin/irb
+
+# http://docs.rubygems.org/read/chapter/3
+sudo export RUBYOPT=rubygems
+echo "export RUBYOPT=rubygems" | sudo tee -a ~/.profile
 
 
 echo "Install Passenger and Nginx"
