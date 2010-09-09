@@ -109,7 +109,7 @@ Não esqueça de fazer:
 Faça o clone do repositório Git:
 
 	cd /var/www
-	git clone git@github.com:username/nome_do_projeto.git
+	git clone --depth 1 git@github.com:username/nome_do_projeto.git
 
 Você pode pular os itens 9 e 10 se utilizar o plugin [Inploy](http://github.com/dcrec1/inploy):   
 
