@@ -85,8 +85,9 @@ sudo ./ruby-enterprise-1.8.7-2010.02/installer --auto=/usr/local/ruby-enterprise
 cd ~
 rm -rf ~/tmp
 
-echo "PATH=\$PATH:/usr/local/ruby-enterprise/bin" | sudo tee -a /etc/environment
+echo "PATH=/usr/local/ruby-enterprise/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games" | sudo tee -a /etc/environment
 . /etc/environment
+
 
 echo "Install Passenger and Nginx"
 echo "------------------------------------------------------------------"
