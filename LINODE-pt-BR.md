@@ -119,6 +119,7 @@ Você pode pular os itens 9 e 10 se utilizar o plugin [Inploy](http://github.com
 Rode:
 
 	cd /var/www/nome_do_projeto
+	mkdir tmp
 	rake db:create
 	rake db:migrate
 
