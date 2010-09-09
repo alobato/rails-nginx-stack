@@ -97,8 +97,8 @@ sudo ln -s /usr/local/ruby-enterprise/bin/testrb /usr/local/bin/testrb
 sudo ln -s /usr/local/ruby-enterprise/bin/irb /usr/local/bin/irb
 
 # http://docs.rubygems.org/read/chapter/3
-sudo export RUBYOPT=rubygems
-echo "export RUBYOPT=rubygems" | sudo tee -a ~/.profile
+export RUBYOPT=rubygems
+echo "export RUBYOPT=rubygems" >> ~/.profile
 
 
 echo "Install Passenger and Nginx"
