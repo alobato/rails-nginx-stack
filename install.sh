@@ -96,10 +96,6 @@ sudo ln -s /usr/local/ruby-enterprise/bin/ruby /usr/local/bin/ruby
 sudo ln -s /usr/local/ruby-enterprise/bin/testrb /usr/local/bin/testrb
 sudo ln -s /usr/local/ruby-enterprise/bin/irb /usr/local/bin/irb
 
-# http://docs.rubygems.org/read/chapter/3
-export RUBYOPT=rubygems
-echo "export RUBYOPT=rubygems" >> ~/.profile
-
 
 echo "Install Passenger and Nginx"
 echo "------------------------------------------------------------------"
@@ -133,6 +129,7 @@ sudo chmod +x /etc/init.d/nginx
 sudo /usr/sbin/update-rc.d -f nginx defaults
 sudo /etc/init.d/nginx start
 
+echo "RUBYOPT=rubygems" | sudo tee -a /etc/environment # http://docs.rubygems.org/read/chapter/3
 echo "RAILS_ENV=production" | sudo tee -a /etc/environment
 
 
